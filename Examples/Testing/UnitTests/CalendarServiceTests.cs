@@ -12,7 +12,7 @@ namespace UnitTests
         public void GetWorkingToday_RealLogic_Friday_ReturnsMonday()
         {
             // Arrange
-            var today = new DateTime(2020, 10, 02);
+            var today = new DateTime(2020, 12, 15);
 
             var service = new CalendarService(new DayShiftService(new DayOfWeekService()));
             
@@ -20,14 +20,14 @@ namespace UnitTests
             var result = service.GetWorkingTomorrow(today);
             
             // Assert
-            result.Should().Be(new DateTime(2020, 10, 05));
+            result.Should().Be(new DateTime(2020, 12, 18));
         }
         
         [Test]
         public void GetWorkingToday_AllDatesWorking_ReturnsTomorrow()
         {
             // Arrange
-            var today = new DateTime(2020, 10, 02);
+            var today = new DateTime(2020, 12, 15);
 
             var dayOfWeekService = new Mock<IDayOfWeekService>();
             dayOfWeekService
@@ -40,7 +40,7 @@ namespace UnitTests
             var result = service.GetWorkingTomorrow(today);
             
             // Assert
-            result.Should().Be(new DateTime(2020, 10, 03));
+            result.Should().Be(new DateTime(2020, 12, 16));
         }
     }
 }
