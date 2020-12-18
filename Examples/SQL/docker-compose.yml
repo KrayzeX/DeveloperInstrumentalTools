@@ -18,6 +18,20 @@ services:
       - POSTGRES_MULTIPLE_DATABASES=exampledb
     networks:
       - internal
+        
+  web-app:
+    container_name: 'application'
+    restart: always
+    image: web-app:latest
+    build:
+      context: ./
+      dockerfile: app.dockerfile
+    ports:
+      - "5000:80"
+    links:
+      - "db"
+    networks:
+      - internal
 
 networks:
   internal:
