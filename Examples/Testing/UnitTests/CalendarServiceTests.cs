@@ -20,7 +20,7 @@ namespace UnitTests
             var result = service.GetWorkingTomorrow(today);
             
             // Assert
-            result.Should().Be(new DateTime(2020, 12, 18));
+            result.Should().Be(new DateTime(2020, 12, 16));
         }
         
         [Test]
