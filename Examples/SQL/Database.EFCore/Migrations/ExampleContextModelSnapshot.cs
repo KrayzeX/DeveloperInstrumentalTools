@@ -19,126 +19,102 @@ namespace Database.EFCore.Migrations
                 .HasAnnotation("ProductVersion", "3.1.8")
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
-            modelBuilder.Entity("Database.EFCore.Entities.SummaryEntity", b =>
+            modelBuilder.Entity("Database.EFCore.Entities.BookCategoryEntity", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("integer")
                         .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
 
-                    b.Property<string>("Code")
+                    b.Property<string>("Category")
                         .HasColumnType("text");
 
                     b.HasKey("Id");
 
-                    b.ToTable("Summary");
+                    b.ToTable("book_category");
 
                     b.HasData(
                         new
                         {
                             Id = 1,
-                            Code = "Freezing"
+                            Code = "Novel"
                         },
                         new
                         {
                             Id = 2,
-                            Code = "Bracing"
+                            Code = "Adventure"
                         },
                         new
                         {
                             Id = 3,
-                            Code = "Chilly"
+                            Code = "Fantasy"
                         },
                         new
                         {
                             Id = 4,
-                            Code = "Cool"
-                        },
-                        new
-                        {
-                            Id = 5,
-                            Code = "Mild"
-                        },
-                        new
-                        {
-                            Id = 6,
-                            Code = "Warm"
-                        },
-                        new
-                        {
-                            Id = 7,
-                            Code = "Balmy"
-                        },
-                        new
-                        {
-                            Id = 8,
-                            Code = "Hot"
-                        },
-                        new
-                        {
-                            Id = 9,
-                            Code = "Sweltering"
-                        },
-                        new
-                        {
-                            Id = 10,
-                            Code = "Scorching"
+                            Code = "History"
                         });
                 });
 
-            modelBuilder.Entity("Database.EFCore.Entities.WeatherEntity", b =>
+            modelBuilder.Entity("Database.EFCore.Entities.BookEntity", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("integer")
                         .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
 
-                    b.Property<int?>("SummaryId")
+                    b.Property<int?>("CategoryId")
                         .HasColumnType("integer");
 
-                    b.Property<decimal>("Temperature")
+                    b.Property<decimal>("Rating")
                         .HasColumnType("numeric");
 
-                    b.Property<DateTime>("TimeStamp")
-                        .HasColumnType("timestamp without time zone");
+                    b.Property<DateTime>("Name")
+                        .HasColumnType("text");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("SummaryId");
+                    b.HasIndex("CategoryId");
 
-                    b.ToTable("Weather");
+                    b.ToTable("book");
 
                     b.HasData(
                         new
                         {
-                            Id = 1,
-                            SummaryId = 3,
-                            Temperature = -1.3m,
-                            TimeStamp = new DateTime(2020, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Id = 1, 
+                            BookCategoryEntity = 1,
+                            Rating = 4.6,
+                            Name = "Eugene Onegin"
                         },
                         new
                         {
-                            Id = 2,
-                            SummaryId = 5,
-                            Temperature = 5.1m,
-                            TimeStamp = new DateTime(2020, 1, 2, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Id = 2, 
+                            BookCategoryEntity = 2,
+                            Rating = 4.3,
+                            Name = "Robinson Crusoe"
                         },
                         new
                         {
-                            Id = 3,
-                            SummaryId = 1,
-                            Temperature = -10m,
-                            TimeStamp = new DateTime(2020, 1, 3, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Id = 3, 
+                            BookCategoryEntity = 3,
+                            Rating = 4.8,
+                            Name = "Lord of the Rings: The Fellowship of The Ring"
+                        },
+                        new 
+                        {
+                            Id = 4, 
+                            BookCategoryEntity = 4,
+                            Rating = 4.5,
+                            Name = "Comparative biographies"
                         });
                 });
 
-            modelBuilder.Entity("Database.EFCore.Entities.WeatherEntity", b =>
+            modelBuilder.Entity("Database.EFCore.Entities.BookEntity", b =>
                 {
-                    b.HasOne("Database.EFCore.Entities.SummaryEntity", "Summary")
+                    b.HasOne("Database.EFCore.Entities.BookCategoryEntity", "book_category")
                         .WithMany()
-                        .HasForeignKey("SummaryId");
+                        .HasForeignKey("CategoryId");
                 });
-#pragma warning restore 612, 618
         }
     }
 }

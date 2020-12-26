@@ -2,18 +2,18 @@ version: '3.7'
 
 services:
 
-  web-app:
-    container_name: web-app
-    restart: always
-    build:
-      context: ./
-      dockerfile: app.dockerfile
-    ports:
-      - "8080:80"
-    links:
-      - "postgres"
-    networks:
-      - internal
+#  web-app:
+#    container_name: web-app
+#    restart: always
+#    build:
+#      context: ./
+#      dockerfile: app.dockerfile
+#    ports:
+#      - "8080:80"
+#    links:
+#      - "postgres"
+#    networks:
+#      - internal
 
   postgres:
     container_name: postgres

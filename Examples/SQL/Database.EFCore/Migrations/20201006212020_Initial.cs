@@ -9,70 +9,66 @@ namespace Database.EFCore.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "Summary",
+                name: "book_category",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    Code = table.Column<string>(nullable: true)
+                    Category = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Summary", x => x.Id);
+                    table.PrimaryKey("PK_book_category", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
-                name: "Weather",
+                name: "book",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    SummaryId = table.Column<int>(nullable: true),
-                    Date = table.Column<DateTime>(nullable: false),
-                    Temperature = table.Column<decimal>(nullable: false)
+                    CategoryId = table.Column<int>(nullable: true),
+                    Rating = table.Column<decimal>(nullable: false),
+                    Name = table.Column<string>(nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Weather", x => x.Id);
+                    table.PrimaryKey("PK_book", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Weather_Summary_SummaryId",
-                        column: x => x.SummaryId,
-                        principalTable: "Summary",
+                        name: "FK_book_Category_CategoryId",
+                        column: x => x.CategoryId,
+                        principalTable: "book_category",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.InsertData(
-                table: "Summary",
-                columns: new[] { "Id", "Code" },
+                table: "book_category",
+                columns: new[] { "Id", "Category" },
                 values: new object[,]
                 {
-                    { 1, "Freezing" },
-                    { 2, "Bracing" },
-                    { 3, "Chilly" },
-                    { 4, "Cool" },
-                    { 5, "Mild" },
-                    { 6, "Warm" },
-                    { 7, "Balmy" },
-                    { 8, "Hot" },
-                    { 9, "Sweltering" },
-                    { 10, "Scorching" }
+                    { 1, "Novel" },
+                    { 2, "Adventure" },
+                    { 3, "Fantasy" },
+                    { 4, "History" }
+                    
                 });
 
             migrationBuilder.InsertData(
-                table: "Weather",
-                columns: new[] { "Id", "Date", "SummaryId", "Temperature" },
+                table: "book",
+                columns: new[] { "Id", "CategoryId", "Rating", "Name" },
                 values: new object[,]
                 {
-                    { 3, new DateTime(2020, 1, 3, 0, 0, 0, 0, DateTimeKind.Unspecified), 1, -10m },
-                    { 1, new DateTime(2020, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 3, -1.3m },
-                    { 2, new DateTime(2020, 1, 2, 0, 0, 0, 0, DateTimeKind.Unspecified), 5, 5.1m }
+                    { 1, 1, 4.6 , "Eugene Onegin" },
+                    { 2, 2, 4.3, "Robinson Crusoe" },
+                    { 3, 3, 4.8, "Lord of the Rings: The Fellowship of The Ring" },
+                    { 4, 4, 4.5, "Comparative biographies"  }
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Weather_SummaryId",
-                table: "Weather",
-                column: "SummaryId");
+                name: "IX_book_CategoryId",
+                table: "book",
+                column: "CategoryId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)

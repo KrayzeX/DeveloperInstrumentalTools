@@ -7,8 +7,8 @@ namespace Database.EFCore
 {
     public partial class ExampleContext : DbContext
     {
-        public DbSet<SummaryEntity> Summaries { get; set; }
-        public DbSet<WeatherEntity> Weathers { get; set; }
+        public DbSet<BookCategoryEntity> Summaries { get; set; }
+        public DbSet<BookEntity> Books { get; set; }
         
         public ExampleContext()
         {
@@ -31,54 +31,57 @@ namespace Database.EFCore
         {
             OnModelCreatingPartial(modelBuilder);
 
-            modelBuilder.Entity<WeatherEntity>(entity =>
+            modelBuilder.Entity<BookEntity>(entity =>
             {
-                entity.ToTable("Weather");
+                entity.ToTable("book");
                 entity.HasKey(x => x.Id);
                 entity.Property(x => x.Id).UseIdentityColumn();
-                entity.HasOne(d => d.Summary);
+                entity.HasOne(d => d.Category);
             });
 
-            modelBuilder.Entity<SummaryEntity>(entity =>
+            modelBuilder.Entity<BookCategoryEntity>(entity =>
             {
-                entity.ToTable("Summary");
+                entity.ToTable("book_category");
                 entity.HasKey(x => x.Id);
                 entity.Property(x => x.Id).UseIdentityColumn();
             });
             
-            modelBuilder.Entity<SummaryEntity>().HasData(new SummaryEntity { Id = 1, Code = "Freezing" });
-            modelBuilder.Entity<SummaryEntity>().HasData(new SummaryEntity { Id = 2, Code = "Bracing" });
-            modelBuilder.Entity<SummaryEntity>().HasData(new SummaryEntity { Id = 3, Code = "Chilly" });
-            modelBuilder.Entity<SummaryEntity>().HasData(new SummaryEntity { Id = 4, Code = "Cool" });
-            modelBuilder.Entity<SummaryEntity>().HasData(new SummaryEntity { Id = 5, Code = "Mild" });
-            modelBuilder.Entity<SummaryEntity>().HasData(new SummaryEntity { Id = 6, Code = "Warm" });
-            modelBuilder.Entity<SummaryEntity>().HasData(new SummaryEntity { Id = 7, Code = "Balmy" });
-            modelBuilder.Entity<SummaryEntity>().HasData(new SummaryEntity { Id = 8, Code = "Hot" });
-            modelBuilder.Entity<SummaryEntity>().HasData(new SummaryEntity { Id = 9, Code = "Sweltering" });
-            modelBuilder.Entity<SummaryEntity>().HasData(new SummaryEntity { Id = 10, Code = "Scorching" });
+            modelBuilder.Entity<BookCategoryEntity>().HasData(new BookCategoryEntity { Id = 1, Category = "Novel" });
+            modelBuilder.Entity<BookCategoryEntity>().HasData(new BookCategoryEntity { Id = 2, Category = "Adventure" });
+            modelBuilder.Entity<BookCategoryEntity>().HasData(new BookCategoryEntity { Id = 3, Category = "Fantasy" });
+            modelBuilder.Entity<BookCategoryEntity>().HasData(new BookCategoryEntity { Id = 4, Category = "History" });
             
-            modelBuilder.Entity<WeatherEntity>().HasData(new
+            
+            modelBuilder.Entity<BookEntity>().HasData(new
             {
                 Id = 1, 
-                TimeStamp = new DateTime(2020, 1, 1),
-                Temperature = -1.3m,
-                SummaryId = 3
+                BookCategoryEntity = 1,
+                Rating = 4.6,
+                Name = "Eugene Onegin"
             });
             
-            modelBuilder.Entity<WeatherEntity>().HasData(new
+            modelBuilder.Entity<BookEntity>().HasData(new
             {
                 Id = 2, 
-                TimeStamp = new DateTime(2020, 1, 2),
-                Temperature = 5.1m,
-                SummaryId = 5
+                BookCategoryEntity = 2,
+                Rating = 4.3,
+                Name = "Robinson Crusoe"
             });
             
-            modelBuilder.Entity<WeatherEntity>().HasData(new
+            modelBuilder.Entity<BookEntity>().HasData(new
             {
                 Id = 3, 
-                TimeStamp = new DateTime(2020, 1, 3),
-                Temperature = -10m,
-                SummaryId = 1
+                BookCategoryEntity = 3,
+                Rating = 4.8,
+                Name = "Lord of the Rings: The Fellowship of The Ring"
+            });
+            
+            modelBuilder.Entity<BookEntity>().HasData(new
+            {
+                Id = 4, 
+                BookCategoryEntity = 4,
+                Rating = 4.5,
+                Name = "Comparative biographies"
             });
             
             //modelBuilder.Entity<WeatherEntity>().OwnsOne(p => p.Summary).HasData(new { Date = new DateTime(2020, 1, 1), Temperature = -1, Code = "Chill" });
